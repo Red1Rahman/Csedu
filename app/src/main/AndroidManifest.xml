@@ -24,8 +24,10 @@
             android:label="Pie Chart" />
         <activity
             android:name=".ShowXYPlotActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"></activity>
-        <activity android:name=".ShowPiechartActivity"></activity>
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity android:name=".ShowPiechartActivity" />
+        <activity android:name=".ScatterPlotActivity" />
+        <activity android:name=".ShowScatterPlotActivity"></activity>
     </application>
 
 </manifest>

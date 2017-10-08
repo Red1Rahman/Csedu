@@ -21,4 +21,11 @@
         android:text="Pie Chart"
         android:onClick="pie_chart"/>
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Scatter Plot"
+        android:onClick="scatter_plot"/>
+
 </LinearLayout>

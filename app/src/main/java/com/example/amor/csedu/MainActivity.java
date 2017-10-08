@@ -25,4 +25,10 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(view.getContext(), PieChartActivity.class);
         startActivity(i);
     }
+
+    public void scatter_plot(View view)
+    {
+        Intent i = new Intent(view.getContext(), ScatterPlotActivity.class);
+        startActivity(i);
+    }
 }

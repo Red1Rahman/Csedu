@@ -26,12 +26,10 @@ import static android.content.ContentValues.TAG;
 public class XYPlot_Visualizer extends Activity implements Visualizer{
 
     private XYPlot plot = null;
-    LineAndPointFormatter series1Format;
-    LineAndPointFormatter series2Format;
-    public XYPlot_Visualizer(XYPlot plot, LineAndPointFormatter series1Format, LineAndPointFormatter series2Format){
+    LineAndPointFormatter[] seriesFormat;
+    public XYPlot_Visualizer(XYPlot plot, LineAndPointFormatter[] seriesFormat){
         this.plot = plot;
-        this.series1Format = series1Format;
-        this.series2Format = series2Format;
+        this.seriesFormat = seriesFormat;
     }
     public void visualize(List<String[]> myEntries )
     {
@@ -42,32 +40,21 @@ public class XYPlot_Visualizer extends Activity implements Visualizer{
         }
         ArrayList<Number[]> series = stringToNumber(n, myEntries);
 
-        // initialize our XYPlot reference:
-
-        // create a couple arrays of y-values to plot:
-
         final Number[] domainLabels = series.get(0);
-        Number[] series1Numbers = series.get(1);
-        Number[] series2Numbers = series.get(2);
-        /*final Number[] domainLabels = {1, 2, 3, 6, 7, 8, 9, 10, 13, 14};
-        Number[] series1Numbers = {1, 4, 2, 8, 4, 16, 8, 32, 16, 64};
-        Number[] series2Numbers = {5, 2, 10, 5, 20, 10, 40, 20, 80, 40};*/
+        Number[][] seriesNumbers = new Number[n][];
+        for(int k = 1; k<n; k++)
+            seriesNumbers[k-1] = series.get(k);
 
-        // turn the above arrays into XYSeries':
-        // (Y_VALS_ONLY means use the element index as the x value)
-        XYSeries series1 = new SimpleXYSeries(
-                Arrays.asList(series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series1");
-        XYSeries series2 = new SimpleXYSeries(
-                Arrays.asList(series2Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series2");
+        XYSeries[] xySeries = new XYSeries[n];
 
-        // create formatters to use for drawing a series using LineAndPointRenderer
-        // and configure them from xml:
-
+        for(int k=0; k<n-1; k++)
+            xySeries[k] = new SimpleXYSeries(
+                    Arrays.asList(seriesNumbers[k]), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series1");
 
 
 
         // add an "dash" effect to the series2 line:
-        series2Format.getLinePaint().setPathEffect(new DashPathEffect(new float[] {
+        seriesFormat[0].getLinePaint().setPathEffect(new DashPathEffect(new float[] {
 
                 // always use DP when specifying pixel sizes, to keep things consistent across devices:
                 PixelUtils.dpToPix(20),
@@ -75,15 +62,13 @@ public class XYPlot_Visualizer extends Activity implements Visualizer{
 
         // just for fun, add some smoothing to the lines:
         // see: http://androidplot.com/smooth-curves-and-androidplot/
-        series1Format.setInterpolationParams(
-                new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
-
-        series2Format.setInterpolationParams(
-                new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
+        for(int k = 0; k<n-1; k++)
+            seriesFormat[k].setInterpolationParams(
+                    new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
 
         // add a new series' to the xyplot:
-        plot.addSeries(series1, series1Format);
-        plot.addSeries(series2, series2Format);
+        for(int k=0; k<n-1; k++)
+            plot.addSeries(xySeries[k], seriesFormat[k]);
 
         plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setFormat(new Format() {
             @Override
@@ -103,10 +88,10 @@ public class XYPlot_Visualizer extends Activity implements Visualizer{
         ArrayList<Number[]> series = new ArrayList<Number[]>();
         for(int i = 0; i < n; i++)
         {
-            Number[] temp = new Number[entries.size()];
-            for(int j=0; j<entries.size(); j++) {
+            Number[] temp = new Number[entries.size()-1];
+            for(int j=1; j<entries.size(); j++) {
                 String[] a = entries.get(j);
-                temp[j] = Float.parseFloat(a[i]);
+                temp[j-1] = Float.parseFloat(a[i]);
             }
             series.add(i, temp);
         }

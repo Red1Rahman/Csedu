@@ -11,9 +11,9 @@ public class VisualizerFactory {
 
     Visualizer visualizer = null;
 
-    public Visualizer chooseXYVisualizer(XYPlot plot, LineAndPointFormatter series1Format, LineAndPointFormatter series2Format)
+    public Visualizer chooseXYVisualizer(XYPlot plot, LineAndPointFormatter[] seriesFormat)
     {
-            visualizer = new XYPlot_Visualizer(plot, series1Format, series2Format);
+        visualizer = new XYPlot_Visualizer(plot, seriesFormat);
 
         return visualizer;
     }
