@@ -15,6 +15,6 @@ import java.util.List;
 
 public interface Visualizer {
 
-    public void visualize(List<String[]> entries, Plot<XYSeries, XYSeriesFormatter, XYSeriesRenderer, XYSeriesBundle, XYSeriesRegistry> plot );
+    public void visualize(List<String[]> myEntries);
 
 }

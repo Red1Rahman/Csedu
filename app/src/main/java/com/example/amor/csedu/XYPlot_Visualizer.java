@@ -26,10 +26,15 @@ import static android.content.ContentValues.TAG;
 public class XYPlot_Visualizer extends Activity implements Visualizer{
 
     private XYPlot plot = null;
-    public void visualize(List<String[]> myEntries, Plot<XYSeries, XYSeriesFormatter, XYSeriesRenderer, XYSeriesBundle, XYSeriesRegistry> plot )
+    LineAndPointFormatter series1Format;
+    LineAndPointFormatter series2Format;
+    public XYPlot_Visualizer(XYPlot plot, LineAndPointFormatter series1Format, LineAndPointFormatter series2Format){
+        this.plot = plot;
+        this.series1Format = series1Format;
+        this.series2Format = series2Format;
+    }
+    public void visualize(List<String[]> myEntries )
     {
-        this.plot =(XYPlot) plot;
-        if(myEntries==null) Log.d(TAG, "onCreate: hellooooooooooo" );
         int n = 0;
         if(myEntries.size()>0) {
             String s[] = myEntries.get(0);
@@ -57,11 +62,9 @@ public class XYPlot_Visualizer extends Activity implements Visualizer{
 
         // create formatters to use for drawing a series using LineAndPointRenderer
         // and configure them from xml:
-        LineAndPointFormatter series1Format =
-                new LineAndPointFormatter(this, R.xml.line_point_formatter_with_labels);
 
-        LineAndPointFormatter series2Format =
-                new LineAndPointFormatter(this, R.xml.line_point_formatter_with_labels_2);
+
+
 
         // add an "dash" effect to the series2 line:
         series2Format.getLinePaint().setPathEffect(new DashPathEffect(new float[] {
@@ -82,7 +85,7 @@ public class XYPlot_Visualizer extends Activity implements Visualizer{
         plot.addSeries(series1, series1Format);
         plot.addSeries(series2, series2Format);
 
-        (XYPlot)plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setFormat(new Format() {
+        plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setFormat(new Format() {
             @Override
             public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
                 int i = Math.round(((Number) obj).floatValue());
