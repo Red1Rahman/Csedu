@@ -27,7 +27,24 @@
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".ShowPiechartActivity" />
         <activity android:name=".ScatterPlotActivity" />
-        <activity android:name=".ShowScatterPlotActivity"></activity>
+        <activity android:name=".ShowScatterPlotActivity" />
+        <activity
+            android:name=".Test"
+            android:exported="true"
+            android:icon="@drawable/ic_launcher">
+            <intent-filter>
+                <action android:name="android.intent.action.GET_CONTENT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.OPENABLE" />
+
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".BarChartActivity" />
+        <activity android:name=".ShowBarChartActivity" />
+        <activity android:name=".BubbleChartActivity" />
+        <activity android:name=".ShowBubbleChartActivity"></activity>
     </application>
 
 </manifest>

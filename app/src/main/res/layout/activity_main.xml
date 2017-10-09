@@ -28,4 +28,25 @@
         android:text="Scatter Plot"
         android:onClick="scatter_plot"/>
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Bar Chart"
+        android:onClick="bar_chart"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Bubble Chart"
+        android:onClick="bubble_chart"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="test"
+        android:onClick="test"/>
+
 </LinearLayout>

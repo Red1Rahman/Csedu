@@ -31,4 +31,22 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(view.getContext(), ScatterPlotActivity.class);
         startActivity(i);
     }
+
+    public void bar_chart(View view)
+    {
+        Intent i = new Intent(view.getContext(), BarChartActivity.class);
+        startActivity(i);
+    }
+
+    public void bubble_chart(View view)
+    {
+        Intent i = new Intent(view.getContext(), BubbleChartActivity.class);
+        startActivity(i);
+    }
+
+    public void test(View view)
+    {
+        Intent i = new Intent(view.getContext(), Test.class);
+        startActivity(i);
+    }
 }
