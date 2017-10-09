@@ -7,12 +7,17 @@ import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.RectRegion;
 import com.androidplot.xy.SimpleXYSeries;
+import com.androidplot.xy.XYGraphWidget;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 
-public class ShowScatterPlotActivity extends AppCompatActivity {
+import java.text.FieldPosition;
+import java.text.Format;
+import java.text.ParsePosition;
+import java.util.Arrays;
+import java.util.List;
 
-    private XYPlot plot;
+public class ShowScatterPlotActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -20,44 +25,19 @@ public class ShowScatterPlotActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_scatter_plot);
 
-        // initialize our XYPlot reference:
+        XYPlot plot = (XYPlot) findViewById(R.id.scatterplot);
+        LineAndPointFormatter[] seriesFormat = new LineAndPointFormatter[4];
+        seriesFormat[0] = new LineAndPointFormatter(this, R.xml.point_formatter1);
+        seriesFormat[1] = new LineAndPointFormatter(this, R.xml.point_formatter2);
+        seriesFormat[2] = new LineAndPointFormatter(this, R.xml.point_formatter3);
+        seriesFormat[3] = new LineAndPointFormatter(this, R.xml.point_formatter4);
 
-        plot = (XYPlot) findViewById(R.id.scatterplot);
+        CSVFile csvfile = CSVFile.getInstance();
+        List<String[]> myEntries = csvfile.readCSVFile();
 
-        XYSeries series1 = generateScatter("series1", 80, new RectRegion(10, 50, 10, 50));
-        XYSeries series2 = generateScatter("series2", 80, new RectRegion(30, 70, 30, 70));
-        plot.setDomainBoundaries(0, 80, BoundaryMode.FIXED);
-        plot.setRangeBoundaries(0, 80, BoundaryMode.FIXED);
-
-        // create formatters to use for drawing a series using LineAndPointRenderer
-        // and configure them from xml:
-        LineAndPointFormatter series1Format =
-                new LineAndPointFormatter(this, R.xml.point_formatter1);
-        LineAndPointFormatter series2Format =
-                new LineAndPointFormatter(this, R.xml.point_formatter2);
-        // add each series to the xyplot:
-        plot.addSeries(series1, series1Format);
-        plot.addSeries(series2, series2Format);
-        // reduce the number of range labels
-        plot.setLinesPerRangeLabel(3);
-
+        VisualizerFactory factory = new VisualizerFactory();
+        Visualizer visualizer = factory.chooseScatterplotVisualizer(plot, seriesFormat);
+        visualizer.visualize(myEntries);
     }
 
-    /**
-     * Generate a XYSeries of random points within a specified region
-     * @param title
-     * @param numPoints
-     * @param region
-     * @return
-     */
-    private XYSeries generateScatter(String title, int numPoints, RectRegion region) {
-        SimpleXYSeries series = new SimpleXYSeries(title);
-        for(int i = 0; i < numPoints; i++) {
-            series.addLast(
-                    region.getMinX().doubleValue() + (Math.random() * region.getWidth().doubleValue()),
-                    region.getMinY().doubleValue() + (Math.random() * region.getHeight().doubleValue())
-            );
-        }
-        return series;
-    }
 }

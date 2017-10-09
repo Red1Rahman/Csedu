@@ -14,7 +14,12 @@ public class VisualizerFactory {
     public Visualizer chooseXYVisualizer(XYPlot plot, LineAndPointFormatter[] seriesFormat)
     {
         visualizer = new XYPlot_Visualizer(plot, seriesFormat);
+        return visualizer;
+    }
 
+    public Visualizer chooseScatterplotVisualizer(XYPlot plot, LineAndPointFormatter[] seriesFormat)
+    {
+        visualizer = new Scatterplot_Visualizer(plot, seriesFormat);
         return visualizer;
     }
 }
